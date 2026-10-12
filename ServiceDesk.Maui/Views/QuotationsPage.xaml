@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ServiceDesk.Maui.ViewModels"
+             xmlns:controls="clr-namespace:ServiceDesk.Maui.Controls"
+             x:Class="ServiceDesk.Maui.Views.QuotationsPage"
+             Title="{DynamicResource LblQuotationsTitle}"
+             BackgroundColor="{StaticResource AppBackground}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <x:Double x:Key="TableHeaderFontSize">13</x:Double>
+        <x:Double x:Key="TableRowFontSize">13</x:Double>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="260" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollView x:Name="MainScrollView" Grid.Column="1" Orientation="Vertical">
+            <Grid x:Name="MainPageGrid" RowDefinitions="Auto, Auto, *" Padding="25" RowSpacing="20">
+
+                <Label x:Name="PageTitleLabel" Grid.Row="0" Text="{DynamicResource LblQuotationsTitle}" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Margin="0,0,0,5" LineBreakMode="WordWrap" />
+
+                <Grid x:Name="ToolbarGrid" Grid.Row="1" ColumnSpacing="15" RowSpacing="10" Margin="0,0,0,5">
+
+                    <Border x:Name="MenuBorder" Grid.Column="0" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMenuToggled" />
+                        </Border.GestureRecognizers>
+                        <Path x:Name="MenuBurgerPath" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="{StaticResource TextPrimary}" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+
+                    <Border x:Name="SearchBorder" Grid.Column="1" StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource CardBackground}" Padding="14,0" HeightRequest="44" WidthRequest="380" HorizontalOptions="Start">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label x:Name="SearchIconLabel" Grid.Column="0" Text="🔍" FontSize="16" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" />
+                            <ScrollView Grid.Column="1" Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                                <Entry x:Name="SearchEntry" Placeholder="{DynamicResource LblSearchPlaceholder}" Text="{Binding SearchText}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" PlaceholderColor="{StaticResource TextMuted}" VerticalOptions="Center" FontSize="14" MinimumWidthRequest="250" />
+                            </ScrollView>
+                        </Grid>
+                    </Border>
+
+                    <FlexLayout x:Name="ActionButtonsLayout" Grid.Column="2" Wrap="Wrap" AlignItems="Center" HorizontalOptions="Fill">
+                        <Button x:Name="RefreshButton" Text="{DynamicResource LblRefreshData}" Command="{Binding LoadQuotationsCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextSecondary}" BorderColor="{StaticResource BorderColor}" BorderWidth="1" CornerRadius="8" Padding="16,8" FontSize="14" FontAttributes="Bold" Margin="0,4,8,4" />
+                        <Button x:Name="PrintButton" Text="{DynamicResource LblPrint}" Command="{Binding PrintQuotationCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Info}" BorderColor="{StaticResource Info}" BorderWidth="1" CornerRadius="8" Padding="16,8" FontSize="14" FontAttributes="Bold" Margin="0,4,8,4" />
+                        <Button x:Name="DeleteButton" Text="{DynamicResource LblActionDelete}" Command="{Binding DeleteQuotationCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Danger}" BorderColor="{StaticResource Danger}" BorderWidth="1" CornerRadius="8" Padding="16,8" FontSize="14" FontAttributes="Bold" Margin="0,4,8,4" />
+                        <Button x:Name="NewQuotationButton" Text="{DynamicResource LblCreateQuotation}" Command="{Binding GoToAddQuotationCommand}" BackgroundColor="{StaticResource Success}" TextColor="{StaticResource White}" FontSize="14" FontAttributes="Bold" CornerRadius="8" Padding="20,8" Margin="0,4,0,4" />
+                    </FlexLayout>
+                </Grid>
+
+                <Border x:Name="QuotationsBorder" Grid.Row="2" StrokeShape="RoundRectangle 14" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" HorizontalOptions="Fill">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Opacity="0.04" Offset="0,4" Radius="12" />
+                    </Border.Shadow>
+
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                        <Grid x:Name="QuotationsGrid" RowDefinitions="Auto,*" HorizontalOptions="Start">
+
+                            <Grid x:Name="TableHeaderGrid" Grid.Row="0" ColumnDefinitions="90, 2*, 2*, 2.5*, 1.5*, 1.5*, 1.5*" Padding="20,15" ColumnSpacing="15" BackgroundColor="{StaticResource SidebarBackground}">
+                                <Label Grid.Column="0" Text="{DynamicResource LblColId}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="1" Text="{DynamicResource LblColCustomer}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="2" Text="{DynamicResource LblColEquipment}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="3" Text="{DynamicResource LblProblemDescription}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="4" Text="{DynamicResource LblEstimatedCost}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="5" Text="{DynamicResource LblColStatus}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                <Label Grid.Column="6" Text="{DynamicResource LblColDate}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                            </Grid>
+
+                            <CollectionView x:Name="QuotationsCollection" Grid.Row="1" ItemsSource="{Binding Quotations}" SelectionMode="Single" SelectedItem="{Binding SelectedQuotation}" ItemSizingStrategy="MeasureAllItems" HorizontalOptions="Start">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid MinimumHeightRequest="55">
+
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Selected">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="#E3F2FD" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnRowTapped" CommandParameter="{Binding .}" />
+                                                <TapGestureRecognizer NumberOfTapsRequired="2" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:QuotationsViewModel}}, Path=EditQuotationCommand}" CommandParameter="{Binding .}" />
+                                            </Grid.GestureRecognizers>
+
+                                            <Grid ColumnDefinitions="90, 2*, 2*, 2.5*, 1.5*, 1.5*, 1.5*" Padding="20,10" ColumnSpacing="15">
+                                                <Label Grid.Column="0" Text="{Binding Id, StringFormat='QUO-{0:D3}'}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                <Label Grid.Column="1" Text="{Binding Customer.FullName, TargetNullValue='Unknown'}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap" Margin="0,0,10,0" />
+                                                <Label Grid.Column="2" Text="{Binding EquipmentDetails, TargetNullValue='N/A'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap" Margin="0,0,10,0" />
+                                                <Label Grid.Column="3" Text="{Binding ProblemDescription, TargetNullValue='N/A'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap" Margin="0,0,10,0" />
+                                                <Label Grid.Column="4" Text="{Binding EstimatedCost, StringFormat='€ {0:F2}'}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" TextColor="{StaticResource Success}" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap" Margin="0,0,10,0"/>
+                                                <Label Grid.Column="5" Text="{Binding Status}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Margin="0,0,10,0" />
+                                                <Label Grid.Column="6" Text="{Binding CreatedAt, StringFormat='{0:yyyy-MM-dd HH:mm}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                            </Grid>
+
+                                            <Border BackgroundColor="{StaticResource DividerColor}" StrokeThickness="0" VerticalOptions="End" HeightRequest="1" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </ScrollView>
+                </Border>
+            </Grid>
+        </ScrollView>
+        <controls:SidebarControl x:Name="AppSidebar" Grid.Column="0" Grid.ColumnSpan="2" />
+    </Grid>
+</ContentPage>

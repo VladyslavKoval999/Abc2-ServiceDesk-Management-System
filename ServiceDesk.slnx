@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ServiceDesk.Api/ServiceDesk.Api.csproj" />
+  <Project Path="ServiceDesk.Maui/ServiceDesk.Maui.csproj" Id="06e91e6c-8bd2-420e-b2a2-e24384ac221a" />
+  <Project Path="ServiceDesk.Shared/ServiceDesk.Shared.csproj" />
+</Solution>

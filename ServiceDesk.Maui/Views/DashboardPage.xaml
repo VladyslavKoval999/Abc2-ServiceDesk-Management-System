@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ServiceDesk.Maui.ViewModels"
+             xmlns:controls="clr-namespace:ServiceDesk.Maui.Controls"
+             x:Class="ServiceDesk.Maui.Views.DashboardPage"
+             Title="{DynamicResource LblDashboardTitle}"
+             BackgroundColor="{StaticResource AppBackground}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <x:Double x:Key="TableHeaderFontSize">13</x:Double>
+        <x:Double x:Key="TableRowFontSize">13</x:Double>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="260" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollView x:Name="MainScrollView" Grid.Column="1" Orientation="Vertical">
+            <Grid x:Name="DashboardGrid" RowDefinitions="Auto, Auto, Auto, Auto" Padding="25" RowSpacing="25">
+
+                <Grid x:Name="HeaderGrid" Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
+                    <Border x:Name="MenuBorder" Grid.Column="0" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMenuToggled" />
+                        </Border.GestureRecognizers>
+                        <Path x:Name="MenuBurgerPath" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="{StaticResource TextPrimary}" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label x:Name="DashboardTitleLabel" Grid.Column="1" Text="{DynamicResource LblDashboardTitle}" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap" />
+
+                    <HorizontalStackLayout x:Name="UserInfoLayout" Grid.Column="2" Spacing="15" VerticalOptions="Center">
+                        <Border x:Name="UserAvatarBorder" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource PrimaryLight}" WidthRequest="40" HeightRequest="40" StrokeThickness="0">
+                            <Label x:Name="UserInitialsLabel" Text="{Binding Source={x:Static viewmodels:UserSession.Instance}, Path=Initials}" TextColor="{StaticResource PrimaryDark}" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="14" />
+                        </Border>
+                        <Label x:Name="UsernameLabel" Text="{Binding Source={x:Static viewmodels:UserSession.Instance}, Path=Username}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <Grid x:Name="StatisticsGrid" Grid.Row="1" ColumnDefinitions="*, *, *, *" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                    <Border x:Name="CustomersCard" Grid.Column="0" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" Padding="20" StrokeThickness="1" Stroke="{StaticResource BorderColor}">
+                        <HorizontalStackLayout x:Name="CustomersLayout" Spacing="15">
+                            <Border x:Name="CustomersIconBorder" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource InfoLight}" WidthRequest="48" HeightRequest="48" StrokeThickness="0" VerticalOptions="Center">
+                                <Label x:Name="CustomersIconLabel" Text="👥" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="CustomersTitleLabel" Text="{DynamicResource LblTotalCustomers}" TextColor="{StaticResource TextSecondary}" FontSize="13" LineBreakMode="WordWrap" />
+                                <Label x:Name="CustomersValueLabel" Text="{Binding TotalCustomersCount}" TextColor="{StaticResource TextPrimary}" FontSize="24" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border x:Name="RevenueCard" Grid.Column="1" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" Padding="20" StrokeThickness="1" Stroke="{StaticResource BorderColor}">
+                        <HorizontalStackLayout x:Name="RevenueLayout" Spacing="15">
+                            <Border x:Name="RevenueIconBorder" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource SuccessLight}" WidthRequest="48" HeightRequest="48" StrokeThickness="0" VerticalOptions="Center">
+                                <Label x:Name="RevenueIconLabel" Text="💶" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="RevenueTitleLabel" Text="{DynamicResource LblTotalRevenue}" TextColor="{StaticResource TextSecondary}" FontSize="13" LineBreakMode="WordWrap" />
+                                <Label x:Name="RevenueValueLabel" Text="{Binding TotalRevenue}" TextColor="{StaticResource TextPrimary}" FontSize="24" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border x:Name="PendingCard" Grid.Column="2" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" Padding="20" StrokeThickness="1" Stroke="{StaticResource BorderColor}">
+                        <HorizontalStackLayout x:Name="PendingLayout" Spacing="15">
+                            <Border x:Name="PendingIconBorder" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource WarningLight}" WidthRequest="48" HeightRequest="48" StrokeThickness="0" VerticalOptions="Center">
+                                <Label x:Name="PendingIconLabel" Text="📋" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="PendingTitleLabel" Text="{DynamicResource LblPendingOrders}" TextColor="{StaticResource TextSecondary}" FontSize="13" LineBreakMode="WordWrap" />
+                                <Label x:Name="PendingValueLabel" Text="{Binding PendingOrdersCount}" TextColor="{StaticResource TextPrimary}" FontSize="24" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border x:Name="LowStockCard" Grid.Column="3" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" Padding="20" StrokeThickness="1" Stroke="{StaticResource BorderColor}">
+                        <HorizontalStackLayout x:Name="LowStockLayout" Spacing="15">
+                            <Border x:Name="LowStockIconBorder" StrokeShape="RoundRectangle 8" BackgroundColor="{StaticResource DangerLight}" WidthRequest="48" HeightRequest="48" StrokeThickness="0" VerticalOptions="Center">
+                                <Label x:Name="LowStockIconLabel" Text="📦" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label x:Name="LowStockTitleLabel" Text="{DynamicResource LblLowStock}" TextColor="{StaticResource TextSecondary}" FontSize="13" LineBreakMode="WordWrap" />
+                                <Label x:Name="LowStockValueLabel" Text="{Binding LowStockCount}" TextColor="{StaticResource Danger}" FontSize="24" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Border x:Name="QuickActionsBorder" Grid.Row="2" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" Padding="20" StrokeThickness="1" Stroke="{StaticResource BorderColor}">
+                    <Grid x:Name="QuickActionsGrid" ColumnDefinitions="Auto, *" ColumnSpacing="20">
+                        <Label x:Name="QuickActionsLabel" Grid.Column="0" Text="{DynamicResource LblQuickActions}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                        <Grid x:Name="QuickButtonsGrid" Grid.Column="1" ColumnDefinitions="*, *, *, *" ColumnSpacing="15" RowSpacing="10">
+                            <Button x:Name="NewTaskButton" Grid.Column="0" Text="{DynamicResource LblNewTask}" Command="{Binding GoToNewTaskCommand}" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}" FontAttributes="Bold" CornerRadius="8" Padding="15,12" FontSize="14" LineBreakMode="WordWrap" />
+                            <Button x:Name="CreateInvoiceButton" Grid.Column="1" Text="{DynamicResource LblCreateInvoice}" Command="{Binding GoToNewInvoiceCommand}" BackgroundColor="{StaticResource Success}" TextColor="{StaticResource White}" FontAttributes="Bold" CornerRadius="8" Padding="15,12" FontSize="14" LineBreakMode="WordWrap" />
+                            <Button x:Name="ManageStockButton" Grid.Column="2" Text="{DynamicResource LblManageStock}" Command="{Binding GoToInventoryCommand}" BackgroundColor="{StaticResource Warning}" TextColor="{StaticResource White}" FontAttributes="Bold" CornerRadius="8" Padding="15,12" FontSize="14" LineBreakMode="WordWrap" />
+                            <Button x:Name="AnalyticsButton" Grid.Column="3" Text="{DynamicResource LblViewAnalytics}" Command="{Binding GoToReportsCommand}" BackgroundColor="{StaticResource Danger}" TextColor="{StaticResource White}" FontAttributes="Bold" CornerRadius="8" Padding="15,12" FontSize="14" LineBreakMode="WordWrap" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Grid x:Name="MainContentGrid" Grid.Row="3" ColumnDefinitions="6*, 4*" ColumnSpacing="25" RowSpacing="25">
+
+                    <VerticalStackLayout x:Name="LeftContentColumn" Grid.Column="0" Spacing="25">
+
+                        <Border x:Name="RecentOrdersBorder" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" HorizontalOptions="Fill">
+                            <VerticalStackLayout>
+                                <Label x:Name="RecentOrdersTitleLabel" Text="{DynamicResource LblRecentOrders}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="20,20,20,10" LineBreakMode="WordWrap" />
+
+                                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                    <VerticalStackLayout x:Name="RecentOrdersTableLayout" MinimumWidthRequest="600">
+                                        <Grid x:Name="RecentOrdersHeaderGrid" ColumnDefinitions="90, *, *, 120" Padding="20,10" BackgroundColor="{StaticResource SidebarBackground}">
+                                            <Label Grid.Column="0" Text="{DynamicResource LblColTaskNum}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap" />
+                                            <Label Grid.Column="1" Text="{DynamicResource LblColCustomer}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap" />
+                                            <Label Grid.Column="2" Text="{DynamicResource LblProblemDescription}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap" />
+                                            <Label Grid.Column="3" Text="{DynamicResource LblColStatus}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                        </Grid>
+
+                                        <VerticalStackLayout x:Name="RecentOrdersCollection" BindableLayout.ItemsSource="{Binding RecentOrders}">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid MinimumHeightRequest="55" BackgroundColor="Transparent">
+                                                        <Grid ColumnDefinitions="90, *, *, 120" Padding="20,8" ColumnSpacing="15">
+                                                            <Label Grid.Column="0" Text="{Binding Id, StringFormat='TSK-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                                                            <Label Grid.Column="1" Text="{Binding Customer.FullName, TargetNullValue='N/A'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                            <Label Grid.Column="2" Text="{Binding IssueDescription}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                            <Label Grid.Column="3" Text="{Binding Status}" TextColor="{StaticResource Primary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                                        </Grid>
+                                                        <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </ScrollView>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border x:Name="LowStockAlertsBorder" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" HorizontalOptions="Fill">
+                            <VerticalStackLayout>
+                                <Label x:Name="LowStockAlertsTitleLabel" Text="{DynamicResource LblLowStockAlerts}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Danger}" Padding="20,20,20,10" LineBreakMode="WordWrap" />
+                                <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" />
+
+                                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                    <VerticalStackLayout x:Name="LowStockTableLayout" MinimumWidthRequest="380" BindableLayout.ItemsSource="{Binding LowStockItems}">
+                                        <BindableLayout.EmptyView>
+                                            <Label Text="Stock levels are optimal." TextColor="{StaticResource TextMuted}" Padding="20" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                        </BindableLayout.EmptyView>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid MinimumHeightRequest="55" BackgroundColor="Transparent">
+                                                    <Grid ColumnDefinitions="60, *, 120" Padding="20,8" ColumnSpacing="15">
+                                                        <Label Grid.Column="0" Text="⚠️" FontSize="18" VerticalOptions="Center" />
+                                                        <Label Grid.Column="1" Text="{Binding Name}" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" FontSize="{DynamicResource TableRowFontSize}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                        <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                                                            <Label Text="{Binding QuantityInStock}" TextColor="{StaticResource Danger}" FontAttributes="Bold" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+                                                            <Label Text="{DynamicResource LblQtyLeft}" TextColor="{StaticResource TextSecondary}" FontSize="10" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                                        </VerticalStackLayout>
+                                                    </Grid>
+                                                    <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+                                </ScrollView>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout x:Name="RightContentColumn" Grid.Column="1" Spacing="25">
+                        <Border x:Name="ChartBorder" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" Padding="20">
+                            <VerticalStackLayout Spacing="20">
+                                <Label x:Name="TaskDistributionLabel" Text="{DynamicResource LblTaskDistribution}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                <GraphicsView x:Name="ChartGraphicsView" HeightRequest="250" HorizontalOptions="Fill" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border x:Name="TechnicianWorkloadBorder" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" HorizontalOptions="Fill">
+                            <VerticalStackLayout>
+                                <Label x:Name="TechnicianWorkloadTitleLabel" Text="{DynamicResource LblTechnicianWorkload}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="20,20,20,10" LineBreakMode="WordWrap" />
+                                <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" />
+
+                                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                    <VerticalStackLayout x:Name="TechnicianTableLayout" MinimumWidthRequest="350" BindableLayout.ItemsSource="{Binding TechnicianWorkloads}">
+                                        <BindableLayout.EmptyView>
+                                            <Label Text="No active tasks assigned." TextColor="{StaticResource TextMuted}" Padding="20" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                        </BindableLayout.EmptyView>
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid MinimumHeightRequest="65" BackgroundColor="Transparent">
+                                                    <Grid ColumnDefinitions="60, *, 100" Padding="20,8" ColumnSpacing="15">
+                                                        <Border Grid.Column="0" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource PrimaryLight}" WidthRequest="40" HeightRequest="40" StrokeThickness="0" VerticalOptions="Center">
+                                                            <Label Text="{Binding Initials}" TextColor="{StaticResource PrimaryDark}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                        </Border>
+                                                        <Label Grid.Column="1" Text="{Binding TechnicianName}" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" FontSize="{DynamicResource TableRowFontSize}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                        <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                                                            <Label Text="{Binding ActiveTasksCount}" TextColor="{StaticResource Warning}" FontAttributes="Bold" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+                                                            <Label Text="{DynamicResource LblActiveTasks}" TextColor="{StaticResource TextSecondary}" FontSize="10" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+                                                        </VerticalStackLayout>
+                                                    </Grid>
+                                                    <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+                                </ScrollView>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+        </ScrollView>
+
+        <controls:SidebarControl x:Name="AppSidebar" Grid.Column="0" Grid.ColumnSpan="2" />
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="ServiceDesk.Maui.Localization.StringsPt">
+
+    <x:String x:Key="LblAlert">Alerta</x:String>
+    <x:String x:Key="LblNotEnoughStock">Stock insuficiente no inventário!</x:String>
+    <x:String x:Key="LblNoMoreStock">Não há mais stock disponível!</x:String>
+    <x:String x:Key="LblValidationError">Erro de Validação</x:String>
+    <x:String x:Key="LblWarning">Aviso</x:String>
+    <x:String x:Key="LblSaveTaskFirst">Por favor, Salve a tarefa primeiro para gerar um ID.</x:String>
+    <x:String x:Key="LblPrintDocument">Imprimir Documento</x:String>
+    <x:String x:Key="LblPrintLabel">Imprimir Etiqueta</x:String>
+    <x:String x:Key="LblPage">Página</x:String>
+    <x:String x:Key="LblTask">TAREFA:</x:String>
+    <x:String x:Key="LblClient">Cliente:</x:String>
+    <x:String x:Key="LblEquip">Equip:</x:String>
+    <x:String x:Key="LblSN">N/S:</x:String>
+    <x:String x:Key="LblDate">Data:</x:String>
+    <x:String x:Key="LblContactName">Nome de Contato:</x:String>
+    <x:String x:Key="LblState">Estado:</x:String>
+    <x:String x:Key="LblCables">Cabos:</x:String>
+    <x:String x:Key="LblWorkPerformedUpper">TRABALHO EFETUADO</x:String>
+    <x:String x:Key="LblPartsUsedUpper">PEÇAS UTILIZADAS</x:String>
+    <x:String x:Key="LblPart">Peça</x:String>
+    <x:String x:Key="LblQty">Qtd</x:String>
+    <x:String x:Key="LblPrice">Preço</x:String>
+    <x:String x:Key="LblTotal">Total</x:String>
+    <x:String x:Key="LblTotalCostUpper">CUSTO TOTAL:</x:String>
+    <x:String x:Key="LblWarrantySuffix">(Garantia)</x:String>
+    <x:String x:Key="LblFailedToSave">Falha ao guardar a tarefa.</x:String>
+    <x:String x:Key="LblNewPart">+ Nova Peça</x:String>
+
+    <x:String x:Key="LblDashboardTitle">Painel</x:String>
+    <x:String x:Key="LblWorkOrdersTitle">Tarefas</x:String>
+    <x:String x:Key="LblCustomersTitle">Clientes</x:String>
+    <x:String x:Key="LblEquipmentTitle">Equipamento</x:String>
+    <x:String x:Key="LblProductsTitle">Inventário</x:String>
+    <x:String x:Key="LblSuppliersTitle">Fornecedores</x:String>
+    <x:String x:Key="LblPurchasingTitle">Compras</x:String>
+    <x:String x:Key="LblInvoicesTitle">Faturação</x:String>
+    <x:String x:Key="LblQuotationsTitle">Orçamentos</x:String>
+    <x:String x:Key="LblReportsTitle">Relatórios</x:String>
+    <x:String x:Key="LblTechniciansTitle">Técnicos</x:String>
+
+    <x:String x:Key="LblPendingOrders">Ordens Pendentes</x:String>
+    <x:String x:Key="LblTotalRevenue">Receita Total</x:String>
+    <x:String x:Key="LblLowStock">Stock Baixo</x:String>
+    <x:String x:Key="LblTotalCustomers">Total de Clientes</x:String>
+    <x:String x:Key="LblRecentOrders">Ordens Recentes</x:String>
+    <x:String x:Key="LblTaskDistribution">Distribuição de Tarefas</x:String>
+
+    <x:String x:Key="LblRefreshData">↻ Atualizar Dados</x:String>
+    <x:String x:Key="LblChangeLanguage">Switch to EN</x:String>
+    <x:String x:Key="LblCancel">Cancelar</x:String>
+    <x:String x:Key="LblSave">Guardar Detalhes</x:String>
+    <x:String x:Key="LblActionEdit">Editar</x:String>
+    <x:String x:Key="LblActionDelete">Eliminar</x:String>
+    <x:String x:Key="LblViewAll">Ver Tudo</x:String>
+
+    <x:String x:Key="LblNewTask">+ Nova Tarefa</x:String>
+    <x:String x:Key="LblNewCustomer">+ Novo Cliente</x:String>
+    <x:String x:Key="LblNewEquipment">+ Novo Equipamento</x:String>
+    <x:String x:Key="LblNewProduct">+ Novo Inventário</x:String>
+    <x:String x:Key="LblNewTechnician">+ Novo Técnico</x:String>
+    <x:String x:Key="LblAddPart">Adicionar</x:String>
+    <x:String x:Key="LblAddSupplier">+ Adicionar Fornecedor</x:String>
+    <x:String x:Key="LblAddPurchase">+ Registar Compra</x:String>
+    <x:String x:Key="LblCreateInvoice">+ Criar Fatura</x:String>
+    <x:String x:Key="LblCreateQuotation">+ Criar Orçamento</x:String>
+    <x:String x:Key="LblAddPartToOrder">Adicionar Peça</x:String>
+
+    <x:String x:Key="LblColId">ID</x:String>
+    <x:String x:Key="LblColCustomer">Cliente</x:String>
+    <x:String x:Key="LblColEquipment">Equipamento</x:String>
+    <x:String x:Key="LblColTechnician">Técnico</x:String>
+    <x:String x:Key="LblColStatus">Estado</x:String>
+    <x:String x:Key="LblColActions">Ações</x:String>
+    <x:String x:Key="LblColBrandModel">Marca &amp; Modelo</x:String>
+    <x:String x:Key="LblColBrand">Marca</x:String>
+    <x:String x:Key="LblColModel">Modelo</x:String>
+    <x:String x:Key="LblColSerialNumber">Número de Série</x:String>
+    <x:String x:Key="LblColType">Tipo</x:String>
+    <x:String x:Key="LblColOwner">Proprietário</x:String>
+    <x:String x:Key="LblColFullName">Nome Completo</x:String>
+    <x:String x:Key="LblColPhone">Telefone</x:String>
+    <x:String x:Key="LblColEmail">E-mail</x:String>
+    <x:String x:Key="LblColAddress">Morada</x:String>
+    <x:String x:Key="LblColQuantity">Quantidade</x:String>
+    <x:String x:Key="LblColPrice">Preço</x:String>
+    <x:String x:Key="LblColDate">Data</x:String>
+    <x:String x:Key="LblColIssueDate">Data de Emissão</x:String>
+    <x:String x:Key="LblColTotalCost">Custo Total</x:String>
+    <x:String x:Key="LblColItemName">Nome do Artigo</x:String>
+    <x:String x:Key="LblColCompany">Empresa</x:String>
+    <x:String x:Key="LblColContactPerson">Pessoa de Contacto</x:String>
+    <x:String x:Key="LblColSKU">SKU / Referência</x:String>
+    <x:String x:Key="LblColLinkedTask">Tarefa Associada</x:String>
+
+    <x:String x:Key="LblSearchPlaceholder">Pesquisar...</x:String>
+    <x:String x:Key="LblSelectSupplier">Selecionar Fornecedor...</x:String>
+    <x:String x:Key="LblSelectPart">Selecionar do Inventário...</x:String>
+    <x:String x:Key="LblSelectWorkOrder">Selecionar Ordem de Serviço...</x:String>
+    <x:String x:Key="LblSelectCustomer">Selecionar Cliente...</x:String>
+    <x:String x:Key="LblSelectTechnician">Atribuir Técnico...</x:String>
+    <x:String x:Key="LblSelectStatus">Atualizar Estado...</x:String>
+
+    <x:String x:Key="LblEditWorkOrder">Atualizar Ordem de Serviço</x:String>
+    <x:String x:Key="LblEquipmentDetails">Detalhes do Equipamento</x:String>
+    <x:String x:Key="LblProblemDescription">Descrição do Problema</x:String>
+    <x:String x:Key="LblEstimatedCost">Custo Estimado (€)</x:String>
+    <x:String x:Key="LblUsedParts">Peças Utilizadas</x:String>
+    <x:String x:Key="LblLaborCost">Custo Mão-de-Obra (€)</x:String>
+    <x:String x:Key="LblPartsCost">Custo Peças (€)</x:String>
+
+    <x:String x:Key="LblConfirmTitle">Confirmar Ação</x:String>
+    <x:String x:Key="LblConfirmDeleteMessage">Tem a certeza de que deseja eliminar este item? Esta ação não pode ser desfeita.</x:String>
+    <x:String x:Key="LblYes">Sim</x:String>
+    <x:String x:Key="LblNo">Não</x:String>
+    <x:String x:Key="LblSuccess">Sucesso</x:String>
+    <x:String x:Key="LblError">Erro</x:String>
+    <x:String x:Key="LblUnknown">Desconhecido</x:String>
+    <x:String x:Key="LblUnassigned">Não Atribuído</x:String>
+
+    <x:String x:Key="LblColTaskNum">Tarefa nº</x:String>
+    <x:String x:Key="LblColInvoiceNum">Fatura nº</x:String>
+    <x:String x:Key="LblColSupplier">Fornecedor</x:String>
+    <x:String x:Key="LblColTaxId">NIF</x:String>
+
+    <x:String x:Key="LblTaskStatistics">Estatísticas de Tarefas</x:String>
+    <x:String x:Key="LblCompletedTasks">Concluídas</x:String>
+    <x:String x:Key="LblInProgressTasks">Em Curso</x:String>
+    <x:String x:Key="LblPendingTasks">Pendentes</x:String>
+    <x:String x:Key="LblLowStockAlerts">Alertas de Stock Baixo</x:String>
+    <x:String x:Key="LblQtyLeft">em stock</x:String>
+    <x:String x:Key="LblQuickActions">Ações Rápidas</x:String>
+    <x:String x:Key="LblManageStock">📦 Gerir Stock</x:String>
+    <x:String x:Key="LblViewAnalytics">📊 Ver Análises</x:String>
+    <x:String x:Key="LblTechnicianWorkload">Carga de Trabalho (Técnicos)</x:String>
+    <x:String x:Key="LblActiveTasks">Tarefas Ativas</x:String>
+
+    <x:String x:Key="LblTotalInvoices">Total de Faturas</x:String>
+    <x:String x:Key="LblAvgOrderValue">Valor Médio</x:String>
+    <x:String x:Key="LblTopCustomers">Melhores Clientes</x:String>
+    <x:String x:Key="LblExportReports">Exportar Relatório</x:String>
+    <x:String x:Key="LblColAmount">Valor</x:String>
+    <x:String x:Key="LblPaidStatus">Pago</x:String>
+    <x:String x:Key="LblUnpaidStatus">Por Pagar / Atrasado</x:String>
+
+    <x:String x:Key="LblSelectReportType">Selecionar Tipo de Relatório:</x:String>
+    <x:String x:Key="LblExportPdf">Exportar PDF</x:String>
+    <x:String x:Key="LblReportFinancial">Relatório Financeiro</x:String>
+    <x:String x:Key="LblReportTasks">Análise de Tarefas</x:String>
+    <x:String x:Key="LblReportInventory">Estado do Inventário</x:String>
+    <x:String x:Key="LblChartRevenue">Receita por Estado</x:String>
+    <x:String x:Key="LblChartTechnicians">Melhores Técnicos</x:String>
+    <x:String x:Key="LblChartStock">Ativos de Maior Valor</x:String>
+
+    <x:String x:Key="LblNewTaskTitle">Nova Tarefa</x:String>
+    <x:String x:Key="LblRepairManagement">Gestão de Reparação</x:String>
+    <x:String x:Key="LblRequesterName">Nome do Requerente</x:String>
+    <x:String x:Key="LblRequesterContact">Contacto (Tel/Email)</x:String>
+    <x:String x:Key="LblContactMethod">Método de Contacto</x:String>
+    <x:String x:Key="LblWarrantyStatus">Em Garantia</x:String>
+    <x:String x:Key="LblHourlyRate">Taxa Horária (€)</x:String>
+    <x:String x:Key="LblPrint">Imprimir</x:String>
+    <x:String x:Key="LblClear">Limpar Dados</x:String>
+    <x:String x:Key="LblTotalCost">Custo Total</x:String>
+    <x:String x:Key="LblDateTime">Data / Hora</x:String>
+
+    <x:String x:Key="LblCreatedAt">Criado Em:</x:String>
+    <x:String x:Key="LblEquipment">Equipamento:</x:String>
+    <x:String x:Key="LblSerialNumber">Número de Série:</x:String>
+    <x:String x:Key="LblStateAndCables">Estado e Cabos:</x:String>
+    <x:String x:Key="LblWorkPerformed">Trabalho Efetuado</x:String>
+    <x:String x:Key="LblWorkSchedule">Horário de Trabalho</x:String>
+    <x:String x:Key="LblStart">Início</x:String>
+    <x:String x:Key="LblEnd">Fim</x:String>
+    <x:String x:Key="LblTaskStatus">Estado da Tarefa</x:String>
+    <x:String x:Key="LblAssignedTechnician">Técnico Atribuído</x:String>
+    <x:String x:Key="LblPartsUsed">Inventários Usados</x:String>
+    <x:String x:Key="LblTotalPartsCost">Custo Total de Peças:</x:String>
+
+    <x:String x:Key="LblCostSummary">Resumo de Custos</x:String>
+    <x:String x:Key="LblNoPartsAdded">Ainda não foram adicionadas peças</x:String>
+
+    <x:String x:Key="LblPrintTask">🖨 Imprimir Tarefa (Etiqueta + A4)</x:String>
+    <x:String x:Key="LblWarningFillSave">Por favor, preencha todos os campos e Salve a tarefa antes de imprimir!</x:String>
+    <x:String x:Key="LblSelectFormat">Escolha o formato da etiqueta:</x:String>
+    <x:String x:Key="LblBarcode">Código de Barras</x:String>
+    <x:String x:Key="LblQRCode">QR Code</x:String>
+    <x:String x:Key="LblClientData">DADOS DO CLIENTE</x:String>
+    <x:String x:Key="LblEquipState">Estado do Equipamento</x:String>
+    <x:String x:Key="LblProblemDescTitle">DESCRIÇÃO DO PROBLEMA</x:String>
+    <x:String x:Key="LblSignTech">Assinatura do Técnico</x:String>
+    <x:String x:Key="LblSignClient">Assinatura do Cliente</x:String>
+    <x:String x:Key="LblServiceSheet">Ficha de Reparação</x:String>
+    <x:String x:Key="LblCablesIncluded">Cabos incluídos</x:String>
+    <x:String x:Key="LblOther">Outro</x:String>
+    <x:String x:Key="LblValidationFailed">Por favor, preencha todos os campos obrigatórios.</x:String>
+
+    <x:String x:Key="LblNewProductTitle">Adicionar Novo Inventário</x:String>
+    <x:String x:Key="LblEditProductTitle">Editar Inventário</x:String>
+    <x:String x:Key="LblProductName">Nome do Inventário</x:String>
+    <x:String x:Key="LblUnitPrice">Preço Unitário (€)</x:String>
+    <x:String x:Key="LblQtyInStock">Qtd em Stock</x:String>
+    <x:String x:Key="LblSaveProduct">Guardar Inventário</x:String>
+
+    <x:String x:Key="LblEditCustomerTitle">Editar Detalhes do Cliente</x:String>
+    <x:String x:Key="LblNewCustomerTitle">Adicionar Novo Cliente</x:String>
+    <x:String x:Key="LblAddCustomerBtn">Adicionar Cliente</x:String>
+    <x:String x:Key="LblFullNameReq">Nome Completo</x:String>
+    <x:String x:Key="LblPhoneReq">Número de Telefone</x:String>
+    <x:String x:Key="LblPhysicalAddress">Morada Física</x:String>
+    <x:String x:Key="LblCustomerValidationMsg">Nome Completo e Telefone são obrigatórios.</x:String>
+
+    <x:String x:Key="LblSelectDateTimeTitle">Selecionar Data e Hora</x:String>
+    <x:String x:Key="LblDateLabel">Data</x:String>
+    <x:String x:Key="LblTimeLabel">Hora</x:String>
+
+    <x:String x:Key="LblEditEquipmentTitle">Editar Detalhes do Equipamento</x:String>
+    <x:String x:Key="LblNewEquipmentTitle">Adicionar Novo Equipamento</x:String>
+    <x:String x:Key="LblAddEquipmentBtn">Adicionar Equipamento</x:String>
+    <x:String x:Key="LblBrandReq">Marca</x:String>
+    <x:String x:Key="LblModelReq">Modelo</x:String>
+    <x:String x:Key="LblCustomerOwner">Cliente Proprietário</x:String>
+    <x:String x:Key="LblEquipmentValidationMsg">Marca e Modelo são obrigatórios.</x:String>
+
+    <x:String x:Key="LblEditInvoiceTitle">Editar Fatura</x:String>
+    <x:String x:Key="LblCreateInvoiceTitle">Criar Fatura</x:String>
+    <x:String x:Key="LblAddInvoiceBtn">Adicionar Fatura</x:String>
+    <x:String x:Key="LblLinkedTaskReq">Tarefa Associada</x:String>
+    <x:String x:Key="LblTotalAmountReq">Valor Total (€)</x:String>
+    <x:String x:Key="LblInvoiceValidationMsg">Tarefa Associada e Valor Total válidos são obrigatórios.</x:String>
+
+    <x:String x:Key="LblEditPurchaseTitle">Editar Compra</x:String>
+    <x:String x:Key="LblCreatePurchaseTitle">Registar Compra</x:String>
+    <x:String x:Key="LblAddPurchaseBtn">Adicionar Compra</x:String>
+    <x:String x:Key="LblSupplierReq">Fornecedor</x:String>
+    <x:String x:Key="LblInventoryItemReq">Artigo de Inventário</x:String>
+    <x:String x:Key="LblPurchaseValidationMsg">Por favor, preencha todos os campos obrigatórios corretamente.</x:String>
+
+    <x:String x:Key="LblEditQuotationTitle">Editar Orçamento</x:String>
+    <x:String x:Key="LblCreateQuotationTitle">Criar Orçamento</x:String>
+    <x:String x:Key="LblAddQuotationBtn">Adicionar Orçamento</x:String>
+    <x:String x:Key="LblCustomerReq">Cliente *</x:String>
+    <x:String x:Key="LblEstimatedCostReq">Custo Estimado (€)</x:String>
+    <x:String x:Key="LblQuotationValidationMsg">Cliente e Custo Estimado válidos são obrigatórios.</x:String>
+
+    <x:String x:Key="LblEditSupplierTitle">Editar Detalhes do Fornecedor</x:String>
+    <x:String x:Key="LblNewSupplierTitle">Adicionar Novo Fornecedor</x:String>
+    <x:String x:Key="LblAddSupplierBtn">Adicionar Fornecedor</x:String>
+    <x:String x:Key="LblCompanyNameReq">Nome da Empresa</x:String>
+    <x:String x:Key="LblSupplierValidationMsg">O Nome da Empresa é obrigatório.</x:String>
+
+    <x:String x:Key="LblEditTechnicianTitle">Editar Técnico</x:String>
+    <x:String x:Key="LblAddTechnicianTitle">Adicionar Técnico</x:String>
+    <x:String x:Key="LblAddTechnicianBtn">Adicionar Técnico</x:String>
+    <x:String x:Key="LblTechValidationMsg">O Nome Completo é obrigatório.</x:String>
+
+    <x:String x:Key="LblReportType">📊 Tipo de Relatório:</x:String>
+    <x:String x:Key="LblInvoicesFullDetails">Detalhes Completos de Faturas</x:String>
+    <x:String x:Key="LblTopPayingCustomers">Melhores Clientes (Faturação)</x:String>
+    <x:String x:Key="LblCustomerName">Nome do Cliente</x:String>
+    <x:String x:Key="LblTotalTasks">Total de Tarefas</x:String>
+    <x:String x:Key="LblTotalRevenueCards">Receita Total</x:String>
+    <x:String x:Key="LblComprehensiveTaskAnalytics">Análise Detalhada de Tarefas</x:String>
+    <x:String x:Key="LblDetailedTechnicianAssignments">Tarefas Atribuídas por Técnico</x:String>
+    <x:String x:Key="LblMostServicedEquipmentBrands">Marcas Mais Reparadas</x:String>
+    <x:String x:Key="LblEquipmentBrand">Marca do Equipamento</x:String>
+    <x:String x:Key="LblRepairsCount">Número de Reparações</x:String>
+    <x:String x:Key="LblFullInventoryValuation">Avaliação Completa do Inventário</x:String>
+    <x:String x:Key="LblVisualBreakdown">Análise Visual</x:String>
+
+    <x:String x:Key="LblInvalidPhone">O telefone deve conter apenas números!</x:String>
+    <x:String x:Key="LblInvalidEmail">O e-mail deve conter o símbolo '@'!</x:String>
+    <x:String x:Key="LblPartNumberReq">SKU / Referência</x:String>
+    <x:String x:Key="LblInvalidNumeric">Por favor, insira valores numéricos válidos.</x:String>
+
+    <x:String x:Key="LblWelcome">Bem-vindo de volta</x:String>
+    <x:String x:Key="LblLoginSubtitle">Por favor, inicie sessão na sua conta</x:String>
+    <x:String x:Key="LblPassword">Palavra-passe</x:String>
+    <x:String x:Key="LblLoginBtn">Iniciar Sessão</x:String>
+    <x:String x:Key="LblLoginError">E-mail ou palavra-passe inválidos.</x:String>
+
+    <x:String x:Key="LblSettingsTitle">Definições</x:String>
+    <x:String x:Key="LblAccountSettings">Definições de Conta</x:String>
+    <x:String x:Key="LblUsername">Nome de Utilizador</x:String>
+    <x:String x:Key="LblNewPassword">Nova Palavra-passe</x:String>
+    <x:String x:Key="LblConfirmPassword">Confirmar Palavra-passe</x:String>
+    <x:String x:Key="LblSaveChanges">Guardar Alterações</x:String>
+    <x:String x:Key="LblPreferences">Preferências</x:String>
+    <x:String x:Key="LblAppLanguage">Idioma da Aplicação</x:String>
+    <x:String x:Key="LblAppLanguageDesc">Escolha o seu idioma de interface preferido</x:String>
+    <x:String x:Key="LblPushNotifications">Notificações Push</x:String>
+    <x:String x:Key="LblPushNotificationsDesc">Receber alertas para novas tarefas</x:String>
+    <x:String x:Key="LblLogout">Terminar Sessão</x:String>
+    <x:String x:Key="LblVersion">Versão 1.0.0</x:String>
+    <x:String x:Key="LblPasswordsDoNotMatch">As palavras-passe não coincidem.</x:String>
+    <x:String x:Key="LblSettingsSaved">Definições guardadas com sucesso.</x:String>
+    <x:String x:Key="LblLogoutMessage">Tem a certeza que deseja terminar sessão?</x:String>
+
+    <x:String x:Key="LblAiChat">Assistente IA</x:String>
+    <x:String x:Key="LblAskAi">Perguntar à IA ✨</x:String>
+    <x:String x:Key="LblAiDiagnostic">Diagnóstico IA</x:String>
+    <x:String x:Key="LblAiEmptyPrompt">Por favor, descreva o problema primeiro.</x:String>
+    <x:String x:Key="LblAiThinking">A pensar...</x:String>
+    <x:String x:Key="LblAiPlaceholder">Pergunte algo à IA...</x:String>
+
+</ResourceDictionary>

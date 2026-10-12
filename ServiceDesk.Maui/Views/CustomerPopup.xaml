@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="ServiceDesk.Maui.Views.CustomerPopup"
+           CanBeDismissedByTappingOutsideOfPopup="True"
+           Color="Transparent">
+
+    <Border x:Name="MainBorder" StrokeShape="RoundRectangle 16" BackgroundColor="#F4F6F9" Padding="24,32" WidthRequest="400" MaximumWidthRequest="500" MaximumHeightRequest="750" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+        <Border.Shadow>
+            <Shadow Brush="Black" Opacity="0.12" Offset="0,8" Radius="24"/>
+        </Border.Shadow>
+
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Spacing="20">
+
+                <Label x:Name="TitleLabel" FontSize="22" FontAttributes="Bold" TextColor="#1A2837" HorizontalOptions="Start" Margin="0,0,0,8" LineBreakMode="WordWrap"/>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblNameTitle" Text="{DynamicResource LblFullNameReq}" FontSize="14" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Entry x:Name="NameEntry" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="15" MinimumWidthRequest="250" VerticalOptions="Center" VerticalTextAlignment="Center" Margin="0"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblPhoneTitle" Text="{DynamicResource LblPhoneReq}" FontSize="14" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Entry x:Name="PhoneEntry" Keyboard="Telephone" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="15" MinimumWidthRequest="250" VerticalOptions="Center" VerticalTextAlignment="Center" Margin="0"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblEmailTitle" Text="{DynamicResource LblColEmail}" FontSize="14" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Entry x:Name="EmailEntry" Keyboard="Email" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="15" MinimumWidthRequest="250" VerticalOptions="Center" VerticalTextAlignment="Center" Margin="0"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblAddressTitle" Text="{DynamicResource LblPhysicalAddress}" FontSize="14" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Entry x:Name="AddressEntry" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="15" MinimumWidthRequest="250" VerticalOptions="Center" VerticalTextAlignment="Center" Margin="0"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="16" Margin="0,16,0,0">
+                    <Button x:Name="CancelBtn" Grid.Column="0" Text="{DynamicResource LblCancel}" Clicked="OnCancelClicked" BackgroundColor="Transparent" TextColor="#1A2837" BorderColor="#C7CDD5" BorderWidth="1" CornerRadius="8" FontAttributes="Bold" HeightRequest="48" FontSize="15" LineBreakMode="WordWrap"/>
+                    <Button x:Name="SaveButton" Grid.Column="1" Clicked="OnSaveClicked" BackgroundColor="#0DCAF0" TextColor="White" CornerRadius="8" FontAttributes="Bold" HeightRequest="48" FontSize="15" LineBreakMode="WordWrap"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</mct:Popup>

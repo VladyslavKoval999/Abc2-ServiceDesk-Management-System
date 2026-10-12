@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ServiceDesk.Maui.ViewModels"
+             xmlns:controls="clr-namespace:ServiceDesk.Maui.Controls"
+             x:Class="ServiceDesk.Maui.Views.SettingsPage"
+             Title="{DynamicResource LblSettingsTitle}"
+             BackgroundColor="{StaticResource AppBackground}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <x:Double x:Key="TableHeaderFontSize">13</x:Double>
+        <x:Double x:Key="TableRowFontSize">13</x:Double>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="260" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollView x:Name="MainScrollView" Grid.Column="1" Orientation="Vertical">
+            <Grid x:Name="MainPageGrid" RowDefinitions="Auto, *" Padding="25" RowSpacing="20">
+
+                <Grid x:Name="HeaderGrid" Grid.Row="0" ColumnDefinitions="Auto, *" Margin="0,0,0,10">
+                    <Border x:Name="MenuBorder" Grid.Column="0" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMenuToggled" />
+                        </Border.GestureRecognizers>
+                        <Path x:Name="MenuBurgerPath" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="{StaticResource TextPrimary}" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label x:Name="PageTitleLabel" Grid.Column="1" Text="{DynamicResource LblSettingsTitle}" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Spacing="25" MaximumWidthRequest="800" HorizontalOptions="Center">
+
+                        <Border StrokeShape="RoundRectangle 14" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" Padding="25">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Opacity="0.04" Offset="0,4" Radius="12" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="15">
+                                <Label Text="{DynamicResource LblAccountSettings}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Margin="0,0,0,10" />
+
+                                <Label Text="{DynamicResource LblUsername}" TextColor="{StaticResource TextSecondary}" FontSize="13" FontAttributes="Bold" />
+                                <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource AppBackground}" Padding="15,0" HeightRequest="44">
+                                    <Entry Text="{Binding Username}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                                </Border>
+
+                                <Label Text="{DynamicResource LblNewPassword}" TextColor="{StaticResource TextSecondary}" FontSize="13" FontAttributes="Bold" Margin="0,10,0,0" />
+                                <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource AppBackground}" Padding="15,0" HeightRequest="44">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Entry Grid.Column="0" Text="{Binding NewPassword}" IsPassword="{Binding IsNewPasswordHidden}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+
+                                        <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="0,0,-5,0">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ToggleNewPasswordVisibilityCommand}"/>
+                                            </Border.GestureRecognizers>
+                                            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Path Fill="#8BA1B8" WidthRequest="22" HeightRequest="22" Data="M11.83,9L15,12.16C15,12.11 15,12.05 15,12C15,10.34 13.66,9 12,9C11.95,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12C9,13.66 10.34,15 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17C9.24,17 7,14.76 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7C14.76,7 17,9.24 17,12C17,13.29 16.53,14.46 15.76,15.36L18.2,17.8C19.82,16.45 21.35,14.42 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z" IsVisible="{Binding IsNewPasswordHidden}" />
+                                                <Path Fill="#8BA1B8" WidthRequest="22" HeightRequest="22" Data="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" IsVisible="False">
+                                                    <Path.Triggers>
+                                                        <DataTrigger TargetType="Path" Binding="{Binding IsNewPasswordHidden}" Value="False">
+                                                            <Setter Property="IsVisible" Value="True" />
+                                                        </DataTrigger>
+                                                    </Path.Triggers>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <Label Text="{DynamicResource LblConfirmPassword}" TextColor="{StaticResource TextSecondary}" FontSize="13" FontAttributes="Bold" />
+                                <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource AppBackground}" Padding="15,0" HeightRequest="44">
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Entry Grid.Column="0" Text="{Binding ConfirmPassword}" IsPassword="{Binding IsConfirmPasswordHidden}" BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+
+                                        <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="0,0,-5,0">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ToggleConfirmPasswordVisibilityCommand}"/>
+                                            </Border.GestureRecognizers>
+                                            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Path Fill="#8BA1B8" WidthRequest="22" HeightRequest="22" Data="M11.83,9L15,12.16C15,12.11 15,12.05 15,12C15,10.34 13.66,9 12,9C11.95,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12C9,13.66 10.34,15 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17C9.24,17 7,14.76 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7C14.76,7 17,9.24 17,12C17,13.29 16.53,14.46 15.76,15.36L18.2,17.8C19.82,16.45 21.35,14.42 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z" IsVisible="{Binding IsConfirmPasswordHidden}" />
+                                                <Path Fill="#8BA1B8" WidthRequest="22" HeightRequest="22" Data="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" IsVisible="False">
+                                                    <Path.Triggers>
+                                                        <DataTrigger TargetType="Path" Binding="{Binding IsConfirmPasswordHidden}" Value="False">
+                                                            <Setter Property="IsVisible" Value="True" />
+                                                        </DataTrigger>
+                                                    </Path.Triggers>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <Button Text="{DynamicResource LblSaveChanges}" Command="{Binding SaveChangesCommand}" BackgroundColor="{StaticResource Primary}" TextColor="White" FontAttributes="Bold" CornerRadius="8" Padding="0,12" Margin="0,15,0,0" HorizontalOptions="Start" WidthRequest="180"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border StrokeShape="RoundRectangle 14" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" Padding="25">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Opacity="0.04" Offset="0,4" Radius="12" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="20">
+                                <Label Text="{DynamicResource LblPreferences}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Margin="0,0,0,5" />
+
+                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Margin="0,0,15,0">
+                                        <Label Text="{DynamicResource LblAppLanguage}" TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" />
+                                        <Label Text="{DynamicResource LblAppLanguageDesc}" TextColor="{StaticResource TextSecondary}" FontSize="12" LineBreakMode="WordWrap" />
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="1" StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource AppBackground}" Padding="15,0" HeightRequest="40" WidthRequest="150" HorizontalOptions="End">
+                                        <Picker ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" TextColor="{StaticResource TextPrimary}" BackgroundColor="Transparent" VerticalOptions="Center" />
+                                    </Border>
+                                </Grid>
+
+                                <BoxView HeightRequest="1" Color="{StaticResource DividerColor}" />
+
+                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                        <Label Text="{DynamicResource LblPushNotifications}" TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" />
+                                        <Label Text="{DynamicResource LblPushNotificationsDesc}" TextColor="{StaticResource TextSecondary}" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <Switch Grid.Column="1" IsToggled="{Binding NotificationsEnabled}" OnColor="{StaticResource Primary}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border StrokeShape="RoundRectangle 14" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" Padding="25">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Opacity="0.04" Offset="0,4" Radius="12" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                                <Button Text="{DynamicResource LblLogout}" Command="{Binding LogoutCommand}" BackgroundColor="{StaticResource Danger}" TextColor="White" FontAttributes="Bold" CornerRadius="8" Padding="40,12" WidthRequest="220" />
+                                <Label Text="{DynamicResource LblVersion}" TextColor="{StaticResource TextMuted}" FontSize="12" HorizontalOptions="Center" Margin="0,15,0,0" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </ScrollView>
+
+        <controls:SidebarControl x:Name="AppSidebar" Grid.Column="0" Grid.ColumnSpan="2" />
+    </Grid>
+</ContentPage>

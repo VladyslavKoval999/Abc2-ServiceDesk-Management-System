@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ServiceDesk.Maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ServiceDesk.Maui.Views"
+    FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <Shell.Resources>
+        <Style TargetType="ContentPage">
+            <Setter Property="Shell.NavBarIsVisible" Value="False" />
+            <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
+        </Style>
+    </Shell.Resources>
+
+    <ShellContent Route="DashboardPage" ContentTemplate="{DataTemplate views:DashboardPage}" />
+    <ShellContent Route="MainPage" ContentTemplate="{DataTemplate views:MainPage}" />
+    <ShellContent Route="CustomersPage" ContentTemplate="{DataTemplate views:CustomersPage}" />
+    <ShellContent Route="InventoryPage" ContentTemplate="{DataTemplate views:InventoryPage}" />
+    <ShellContent Route="EquipmentPage" ContentTemplate="{DataTemplate views:EquipmentPage}" />
+    <ShellContent Route="QuotationsPage" ContentTemplate="{DataTemplate views:QuotationsPage}" />
+    <ShellContent Route="InvoicesPage" ContentTemplate="{DataTemplate views:InvoicesPage}" />
+    <ShellContent Route="ReportsRoute" ContentTemplate="{DataTemplate views:ReportsPage}" />
+    <ShellContent Route="SuppliersPage" ContentTemplate="{DataTemplate views:SuppliersPage}" />
+    <ShellContent Route="PurchasingPage" ContentTemplate="{DataTemplate views:PurchasingPage}" />
+    <ShellContent Route="TechniciansPage" ContentTemplate="{DataTemplate views:TechniciansPage}" />
+    <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate views:SettingsPage}" />
+    <ShellContent Route="AiChatPage" ContentTemplate="{DataTemplate views:AiChatPage}" />
+
+</Shell>

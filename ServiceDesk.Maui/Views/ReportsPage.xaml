@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ServiceDesk.Maui.ViewModels"
+             xmlns:controls="clr-namespace:ServiceDesk.Maui.Controls"
+             x:Class="ServiceDesk.Maui.Views.ReportsPage"
+             Title="{DynamicResource LblReportsTitle}"
+             BackgroundColor="{StaticResource AppBackground}"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <x:Double x:Key="TableHeaderFontSize">13</x:Double>
+        <x:Double x:Key="TableRowFontSize">13</x:Double>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="260" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollView x:Name="MainScrollView" Grid.Column="1" Orientation="Vertical">
+            <Grid x:Name="MainPageGrid" RowDefinitions="Auto, Auto, Auto, *" Padding="25" RowSpacing="20">
+
+                <Grid x:Name="HeaderGrid" Grid.Row="0" ColumnDefinitions="Auto, *" Margin="0,0,0,10">
+                    <Border x:Name="MenuBorder" Grid.Column="0" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMenuToggled" />
+                        </Border.GestureRecognizers>
+                        <Path x:Name="MenuBurgerPath" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="{StaticResource TextPrimary}" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label x:Name="PageTitleLabel" Grid.Column="1" Text="{DynamicResource LblReportsTitle}" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="10,0,0,0" LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <Grid x:Name="ToolbarGrid" Grid.Row="1" ColumnSpacing="15" RowSpacing="10">
+                    <Label x:Name="ReportTypeLabel" Grid.Column="0" Text="{DynamicResource LblReportType}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextMuted}" VerticalOptions="Center" LineBreakMode="WordWrap" Margin="0,0,10,0"/>
+
+                    <Border x:Name="PickerBorder" Grid.Column="1" StrokeShape="RoundRectangle 8" Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="{StaticResource CardBackground}" Padding="14,0" HeightRequest="44" MaximumWidthRequest="400" HorizontalOptions="Start">
+                        <Picker x:Name="ReportTypePicker" ItemsSource="{Binding ReportTypes}" SelectedItem="{Binding SelectedReportType}" TextColor="{StaticResource TextPrimary}" FontSize="14" FontAttributes="Bold" BackgroundColor="Transparent" MinimumWidthRequest="250" VerticalOptions="Center"/>
+                    </Border>
+
+                    <FlexLayout x:Name="ActionButtonsLayout" Grid.Column="2" Wrap="Wrap" AlignItems="Center" HorizontalOptions="Fill">
+                        <Button x:Name="RefreshButton" Text="{DynamicResource LblRefreshData}" Command="{Binding LoadReportsDataCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextSecondary}" BorderColor="{StaticResource BorderColor}" BorderWidth="1" CornerRadius="8" Padding="16,8" FontSize="14" FontAttributes="Bold" Margin="0,4,8,4"/>
+                        <Button x:Name="ExportPdfButton" Text="{DynamicResource LblExportPdf}" Command="{Binding ExportToPdfCommand}" BackgroundColor="{StaticResource Danger}" TextColor="{StaticResource White}" FontAttributes="Bold" CornerRadius="8" Padding="16,8" FontSize="14" Margin="0,4,0,4"/>
+                    </FlexLayout>
+                </Grid>
+
+                <Grid x:Name="SummaryCardsGrid" Grid.Row="2" IsVisible="False" ColumnDefinitions="*, *, *, *" ColumnSpacing="15" RowSpacing="15">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="General Dashboard">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                    </Grid.Triggers>
+
+                    <Border x:Name="Card1" Grid.Column="0" BackgroundColor="{StaticResource Primary}" StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="{StaticResource Primary}" Opacity="0.3" Offset="0,6" Radius="12"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout>
+                            <Label x:Name="Card1Title" Text="{DynamicResource LblTotalRevenueCards}" TextColor="White" Opacity="0.8" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                            <Label x:Name="Card1Value" Text="{Binding TotalRevenueAmount}" TextColor="White" FontSize="26" FontAttributes="Bold" Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border x:Name="Card2" Grid.Column="1" BackgroundColor="{StaticResource Success}" StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="{StaticResource Success}" Opacity="0.3" Offset="0,6" Radius="12"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout>
+                            <Label x:Name="Card2Title" Text="{DynamicResource LblActiveTasks}" TextColor="White" Opacity="0.8" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                            <Label x:Name="Card2Value" Text="{Binding ActiveTasksCount}" TextColor="White" FontSize="26" FontAttributes="Bold" Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border x:Name="Card3" Grid.Column="2" BackgroundColor="{StaticResource Info}" StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="{StaticResource Info}" Opacity="0.3" Offset="0,6" Radius="12"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout>
+                            <Label x:Name="Card3Title" Text="{DynamicResource LblTotalCustomers}" TextColor="White" Opacity="0.8" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                            <Label x:Name="Card3Value" Text="{Binding TotalCustomersCount}" TextColor="White" FontSize="26" FontAttributes="Bold" Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border x:Name="Card4" Grid.Column="3" BackgroundColor="{StaticResource Warning}" StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="{StaticResource Warning}" Opacity="0.3" Offset="0,6" Radius="12"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout>
+                            <Label x:Name="Card4Title" Text="{DynamicResource LblLowStock}" TextColor="White" Opacity="0.8" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                            <Label x:Name="Card4Value" Text="{Binding LowStockCount}" TextColor="White" FontSize="26" FontAttributes="Bold" Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Grid x:Name="MainContentGrid" Grid.Row="3" ColumnDefinitions="6.5*, 3.5*" ColumnSpacing="25" RowSpacing="25">
+
+                    <VerticalStackLayout x:Name="LeftContentColumn" Grid.Column="0" HorizontalOptions="Fill">
+
+                        <Border StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" VerticalOptions="Start" HorizontalOptions="Fill">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/>
+                            </Border.Shadow>
+                            <Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Financial Overview">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle1" Grid.Row="0" Text="{DynamicResource LblInvoicesFullDetails}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap" />
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="FinancialTableLayout" MinimumWidthRequest="800" HorizontalOptions="Start">
+
+                                            <Grid x:Name="FinancialHeaderGrid" ColumnDefinitions="90, 2.5*, 1.2*, 1.5*, 1.5*, 1.5*" Padding="25,10" ColumnSpacing="10" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblColInvoiceNum}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblColCustomer}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="2" Text="{DynamicResource LblColTaskNum}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="3" Text="{DynamicResource LblColDate}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="4" Text="{DynamicResource LblColStatus}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="5" Text="{DynamicResource LblColAmount}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="FinancialCollection" BindableLayout.ItemsSource="{Binding FinancialRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="90, 2.5*, 1.2*, 1.5*, 1.5*, 1.5*" Padding="25,15" ColumnSpacing="10" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding Id, StringFormat='INV-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding WorkOrder.Customer.FullName}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                                <Label Grid.Column="2" Text="{Binding WorkOrderId, StringFormat='TSK-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="3" Text="{Binding IssueDate, StringFormat='{0:MM/dd/yyyy}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="4" Text="{Binding Status}" TextColor="{StaticResource Primary}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="5" Text="{Binding TotalAmount, StringFormat='€ {0:F2}'}" TextColor="{StaticResource Success}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="End" HorizontalTextAlignment="End" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Customer Insights">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle2" Grid.Row="0" Text="{DynamicResource LblTopPayingCustomers}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap"/>
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="CustomerTableLayout" MinimumWidthRequest="600" HorizontalOptions="Start">
+                                            <Grid x:Name="CustomerHeaderGrid" ColumnDefinitions="3*, 1.5*, 1.5*" Padding="25,10" ColumnSpacing="15" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblCustomerName}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblTotalTasks}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="2" Text="{DynamicResource LblTotalRevenueCards}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="CustomerCollection" BindableLayout.ItemsSource="{Binding CustomerRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="3*, 1.5*, 1.5*" Padding="25,15" ColumnSpacing="15" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding CustomerName}" TextColor="{StaticResource TextPrimary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding TotalTasks}" TextColor="{StaticResource TextSecondary}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="2" Text="{Binding TotalRevenue, StringFormat='€ {0:F2}'}" TextColor="{StaticResource Success}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="End" HorizontalTextAlignment="End" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Task Status Analytics">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle3" Grid.Row="0" Text="{DynamicResource LblComprehensiveTaskAnalytics}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap"/>
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="TaskTableLayout" MinimumWidthRequest="950" HorizontalOptions="Start">
+                                            <Grid x:Name="TaskHeaderGrid" ColumnDefinitions="80, 1.5*, 1.5*, 1.5*, 3*, 1.2*, 1*" Padding="25,10" ColumnSpacing="10" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblColTaskNum}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblColCustomer}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="2" Text="{DynamicResource LblColEquipment}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="3" Text="{DynamicResource LblColTechnician}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="4" Text="{DynamicResource LblProblemDescription}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="5" Text="{DynamicResource LblColStatus}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="6" Text="{DynamicResource LblColTotalCost}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="TaskCollection" BindableLayout.ItemsSource="{Binding TaskRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="80, 1.5*, 1.5*, 1.5*, 3*, 1.2*, 1*" Padding="25,15" ColumnSpacing="10" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding Id, StringFormat='TSK-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding Customer.FullName, TargetNullValue='Unassigned'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="2" Text="{Binding Equipment.Brand, TargetNullValue='Unknown'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="3" Text="{Binding Technician.FullName, TargetNullValue='Unassigned'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="4" Text="{Binding IssueDescription}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="5" Text="{Binding Status}" TextColor="{StaticResource Primary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="6" Text="{Binding TotalCost, StringFormat='€ {0:F2}'}" TextColor="{StaticResource Success}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="End" HorizontalTextAlignment="End" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Top Technicians Workload">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle4" Grid.Row="0" Text="{DynamicResource LblDetailedTechnicianAssignments}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap"/>
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="TechTableLayout" MinimumWidthRequest="750" HorizontalOptions="Start">
+                                            <Grid x:Name="TechHeaderGrid" ColumnDefinitions="80, 1.5*, 1.5*, 3*, 1.2*" Padding="25,10" ColumnSpacing="10" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblColTaskNum}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblColTechnician}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="2" Text="{DynamicResource LblColCustomer}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="3" Text="{DynamicResource LblProblemDescription}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="4" Text="{DynamicResource LblColStatus}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="TechCollection" BindableLayout.ItemsSource="{Binding TaskRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="80, 1.5*, 1.5*, 3*, 1.2*" Padding="25,15" ColumnSpacing="10" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding Id, StringFormat='TSK-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding Technician.FullName}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="2" Text="{Binding Customer.FullName, TargetNullValue='Unknown'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="3" Text="{Binding IssueDescription}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="4" Text="{Binding Status}" TextColor="{StaticResource Primary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Equipment Analytics">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle5" Grid.Row="0" Text="{DynamicResource LblMostServicedEquipmentBrands}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap"/>
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="EquipTableLayout" MinimumWidthRequest="500" HorizontalOptions="Start">
+                                            <Grid x:Name="EquipHeaderGrid" ColumnDefinitions="3*, 1.5*" Padding="25,10" ColumnSpacing="15" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblEquipmentBrand}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblRepairsCount}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="EquipCollection" BindableLayout.ItemsSource="{Binding EquipmentRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="3*, 1.5*" Padding="25,15" ColumnSpacing="15" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding Brand}" TextColor="{StaticResource TextPrimary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding TaskCount}" TextColor="{StaticResource TextSecondary}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                                <Grid IsVisible="False" RowDefinitions="Auto, Auto, *">
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="Inventory Health">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding SelectedReportType}" Value="General Dashboard">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                    <Label x:Name="TableTitle6" Grid.Row="0" Text="{DynamicResource LblFullInventoryValuation}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" Padding="25" LineBreakMode="WordWrap"/>
+
+                                    <ScrollView Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Default">
+                                        <VerticalStackLayout x:Name="InventoryTableLayout" MinimumWidthRequest="750" HorizontalOptions="Start">
+                                            <Grid x:Name="InventoryHeaderGrid" ColumnDefinitions="80, 1.5*, 3*, 1.5*, 1.5*" Padding="25,10" ColumnSpacing="10" BackgroundColor="{StaticResource SidebarBackground}" HorizontalOptions="Fill">
+                                                <Label Grid.Column="0" Text="{DynamicResource LblColId}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="1" Text="{DynamicResource LblColSKU}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="2" Text="{DynamicResource LblColItemName}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="3" Text="{DynamicResource LblColQuantity}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                                <Label Grid.Column="4" Text="{DynamicResource LblColPrice}" FontSize="{DynamicResource TableHeaderFontSize}" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap"/>
+                                            </Grid>
+
+                                            <VerticalStackLayout x:Name="InventoryCollection" BindableLayout.ItemsSource="{Binding InventoryRecords}" HorizontalOptions="Fill">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0" ColumnDefinitions="80, 1.5*, 3*, 1.5*, 1.5*" Padding="25,15" ColumnSpacing="10" MinimumHeightRequest="54" HorizontalOptions="Fill">
+                                                                <Label Grid.Column="0" Text="{Binding Id, StringFormat='INV-{0:D4}'}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="1" Text="{Binding PartNumber}" FontSize="{DynamicResource TableRowFontSize}" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="2" Text="{Binding Name}" TextColor="{StaticResource TextSecondary}" FontSize="{DynamicResource TableRowFontSize}" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="3" Text="{Binding QuantityInStock}" TextColor="{StaticResource Warning}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                                <Label Grid.Column="4" Text="{Binding UnitPrice, StringFormat='€ {0:F2}'}" TextColor="{StaticResource Success}" FontSize="{DynamicResource TableRowFontSize}" HorizontalOptions="End" HorizontalTextAlignment="End" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                            </Grid>
+                                                            <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource DividerColor}" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </ScrollView>
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout x:Name="RightContentColumn" Grid.Column="1" HorizontalOptions="Fill">
+                        <Border StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" Padding="30" VerticalOptions="Start" HorizontalOptions="Fill">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Opacity="0.05" Offset="0,4" Radius="10"/>
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="30">
+                                <Label x:Name="ChartTitleLabel" Text="{DynamicResource LblVisualBreakdown}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+
+                                <GraphicsView x:Name="ChartGraphicsView" HeightRequest="300" HorizontalOptions="Fill" Margin="10,0"/>
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding ChartData}" Spacing="15">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                                                <Border Grid.Column="0" BackgroundColor="{Binding SegmentColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="0" StrokeShape="RoundRectangle 4" VerticalOptions="Center"/>
+                                                <Label Grid.Column="1" Text="{Binding Label}" TextColor="{StaticResource TextPrimary}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="WordWrap"/>
+                                                <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                                                    <Label Text="{Binding DisplayValue}" TextColor="{StaticResource TextPrimary}" FontAttributes="Bold" FontSize="15" HorizontalOptions="End"/>
+                                                    <Label Text="{Binding Percentage, StringFormat='{0:P1}'}" TextColor="{StaticResource TextSecondary}" FontSize="12" HorizontalOptions="End"/>
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+        </ScrollView>
+        <controls:SidebarControl x:Name="AppSidebar" Grid.Column="0" Grid.ColumnSpan="2" />
+    </Grid>
+</ContentPage>

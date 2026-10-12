@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="ServiceDesk.Maui.Views.QuotationPopup"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Color="Transparent">
+
+    <mct:Popup.Resources>
+        <x:Double x:Key="PopupWidth">450</x:Double>
+        <x:Double x:Key="PopupTitleSize">22</x:Double>
+        <x:Double x:Key="PopupLabelSize">14</x:Double>
+        <x:Double x:Key="PopupEntrySize">15</x:Double>
+        <x:Double x:Key="PopupButtonSize">15</x:Double>
+        <Thickness x:Key="PopupPadding">24,32</Thickness>
+    </mct:Popup.Resources>
+
+    <Border x:Name="MainBorder" StrokeShape="RoundRectangle 16" BackgroundColor="#F4F6F9" Padding="{DynamicResource PopupPadding}" WidthRequest="{DynamicResource PopupWidth}" MaximumWidthRequest="550" MaximumHeightRequest="850" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+        <Border.Shadow>
+            <Shadow Brush="Black" Opacity="0.12" Offset="0,8" Radius="24"/>
+        </Border.Shadow>
+
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Spacing="20">
+
+                <Label x:Name="TitleLabel" FontSize="{DynamicResource PopupTitleSize}" FontAttributes="Bold" TextColor="#1A2837" HorizontalOptions="Start" Margin="0,0,0,8" LineBreakMode="WordWrap"/>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblCustomerTitle" Text="{DynamicResource LblCustomerReq}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Picker x:Name="CustomerPicker" ItemDisplayBinding="{Binding FullName}" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" MinimumWidthRequest="250" VerticalOptions="Fill" VerticalTextAlignment="Center" Margin="0"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label x:Name="LblCostTitle" Text="{DynamicResource LblEstimatedCostReq}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                        <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                            <Entry x:Name="CostEntry" Keyboard="Numeric" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" VerticalOptions="Fill" VerticalTextAlignment="Center" Margin="0"/>
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                        <Label x:Name="LblStatusTitle" Text="{DynamicResource LblStatus}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                        <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                            <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                                <Picker x:Name="StatusPicker" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" MinimumWidthRequest="250" VerticalOptions="Fill" VerticalTextAlignment="Center" Margin="0">
+                                    <Picker.Items>
+                                        <x:String>Pending Start</x:String>
+                                        <x:String>Approved</x:String>
+                                        <x:String>Rejected</x:String>
+                                        <x:String>Completed</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </ScrollView>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label x:Name="LblEquipTitle" Text="{DynamicResource LblEquipmentDetails}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                        <Border Grid.Column="0" Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                            <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                                <Picker x:Name="EquipmentPicker" ItemDisplayBinding="{Binding DisplayText}" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" MinimumWidthRequest="250" VerticalOptions="Fill" VerticalTextAlignment="Center" Margin="0"/>
+                            </ScrollView>
+                        </Border>
+                        <Button Grid.Column="1" x:Name="AddEquipmentBtn" Text="+" Clicked="OnAddEquipmentClicked" BackgroundColor="#0DCAF0" TextColor="White" FontAttributes="Bold" CornerRadius="8" Padding="15,0" HeightRequest="44" FontSize="{DynamicResource PopupButtonSize}"/>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Grid.Column="0" Text="{DynamicResource LblProblemDescription}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="Center"/>
+                        <Button Grid.Column="1" Text="{DynamicResource LblAskAi}" Clicked="OnAskAiClicked" BackgroundColor="#E3F2FD" TextColor="#0DCAF0" HeightRequest="30" Padding="10,0" FontSize="12" CornerRadius="6" FontAttributes="Bold"/>
+                    </Grid>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="-1" MinimumHeightRequest="80" Padding="12,8">
+                        <Editor x:Name="ProblemEntry" BackgroundColor="Transparent" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" AutoSize="TextChanges" Margin="0"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="Client Signature" FontSize="{DynamicResource PopupLabelSize}" TextColor="#6C757D" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Button Grid.Column="1" Text="Clear" Clicked="OnClearSignatureClicked" BackgroundColor="#E3E7EC" TextColor="#1A2837" HeightRequest="30" Padding="10,0" FontSize="12" CornerRadius="6"/>
+                    </Grid>
+                    <Border x:Name="SignatureContainer" Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" HeightRequest="120" Padding="0" BackgroundColor="#FFFFFF">
+                        <Grid>
+                            <mct:DrawingView x:Name="SignatureView" LineColor="#1A2837" LineWidth="3" BackgroundColor="White" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                            <Image x:Name="SavedSignatureImage" BackgroundColor="White" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="False" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="16" Margin="0,16,0,0">
+                    <Button x:Name="CancelBtn" Grid.Column="0" Text="{DynamicResource LblCancel}" Clicked="OnCancelClicked" BackgroundColor="Transparent" TextColor="#1A2837" BorderColor="#C7CDD5" BorderWidth="1" CornerRadius="8" FontAttributes="Bold" HeightRequest="48" FontSize="{DynamicResource PopupButtonSize}" LineBreakMode="WordWrap"/>
+                    <Button x:Name="SaveButton" Grid.Column="1" Clicked="OnSaveClicked" BackgroundColor="#0DCAF0" TextColor="White" CornerRadius="8" FontAttributes="Bold" HeightRequest="48" FontSize="{DynamicResource PopupButtonSize}" LineBreakMode="WordWrap"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</mct:Popup>

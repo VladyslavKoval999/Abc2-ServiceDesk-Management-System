@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ServiceDesk.Maui.ViewModels"
+             x:Class="ServiceDesk.Maui.Views.LoginPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="LoginContainerWidth">400</x:Double>
+            <x:Double x:Key="LogoBoxHeight">70</x:Double>
+            <x:Double x:Key="LoginLogoFontSize">32</x:Double>
+            <x:Double x:Key="LoginWelcomeFontSize">28</x:Double>
+            <x:Double x:Key="LoginSubtitleFontSize">15</x:Double>
+            <x:Double x:Key="LoginLabelFontSize">14</x:Double>
+            <x:Double x:Key="LoginFieldFontSize">15</x:Double>
+            <x:Double x:Key="LoginButtonFontSize">17</x:Double>
+            <x:Double x:Key="LoadingFontSize">36</x:Double>
+            <x:Double x:Key="LoginFieldHeight">54</x:Double>
+
+            <Style x:Key="LoginFieldStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
+                <Setter Property="Stroke" Value="#4DFFFFFF"/>
+                <Setter Property="StrokeThickness" Value="1.5"/>
+                <Setter Property="BackgroundColor" Value="#1AFFFFFF"/>
+                <Setter Property="HeightRequest" Value="{DynamicResource LoginFieldHeight}"/>
+                <Setter Property="Padding" Value="16,0"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#152840" Offset="0.0" />
+                <GradientStop Color="#0DCAF0" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <VerticalStackLayout Spacing="30" WidthRequest="{DynamicResource LoginContainerWidth}" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding IsNotBusy}" Padding="15">
+
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,0,0,20">
+                <Border StrokeShape="RoundRectangle 16" BackgroundColor="#0DCAF0" HeightRequest="{DynamicResource LogoBoxHeight}" Padding="20,0" StrokeThickness="0" HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="#0DCAF0" Opacity="0.4" Offset="0,6" Radius="15"/>
+                    </Border.Shadow>
+                    <Label Text="Abc2 SD" TextColor="White" FontSize="{DynamicResource LoginLogoFontSize}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+                <Label Text="{DynamicResource LblWelcome}" FontSize="{DynamicResource LoginWelcomeFontSize}" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,15,0,0" LineBreakMode="WordWrap"/>
+                <Label Text="{DynamicResource LblLoginSubtitle}" FontSize="{DynamicResource LoginSubtitleFontSize}" TextColor="#B0C4DE" HorizontalOptions="Center" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="20">
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Username" FontSize="{DynamicResource LoginLabelFontSize}" FontAttributes="Bold" TextColor="#E3E7EC"/>
+                    <Border Style="{StaticResource LoginFieldStyle}">
+                        <Entry Text="{Binding Email}" Placeholder="Enter your username" TextColor="White" PlaceholderColor="#8BA1B8" BackgroundColor="Transparent" VerticalOptions="Center" FontSize="{DynamicResource LoginFieldFontSize}"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{DynamicResource LblPassword}" FontSize="{DynamicResource LoginLabelFontSize}" FontAttributes="Bold" TextColor="#E3E7EC"/>
+                    <Border Style="{StaticResource LoginFieldStyle}">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry Grid.Column="0" Text="{Binding Password}" IsPassword="{Binding IsPasswordHidden}" Placeholder="••••••••" TextColor="White" PlaceholderColor="#8BA1B8" BackgroundColor="Transparent" VerticalOptions="Center" FontSize="{DynamicResource LoginFieldFontSize}"/>
+
+                            <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="0,0,-5,0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TogglePasswordVisibilityCommand}"/>
+                                </Border.GestureRecognizers>
+                                <Path Fill="#B0C4DE" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="22" HeightRequest="22">
+                                    <Path.Triggers>
+                                        <DataTrigger TargetType="Path" Binding="{Binding IsPasswordHidden}" Value="False">
+                                            <Setter Property="Data" Value="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Path" Binding="{Binding IsPasswordHidden}" Value="True">
+                                            <Setter Property="Data" Value="M11.83,9L15,12.16C15,12.11 15,12.05 15,12C15,10.34 13.66,9 12,9C11.95,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12C9,13.66 10.34,15 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17C9.24,17 7,14.76 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7C14.76,7 17,9.24 17,12C17,13.29 16.53,14.46 15.76,15.36L18.2,17.8C19.82,16.45 21.35,14.42 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z"/>
+                                        </DataTrigger>
+                                    </Path.Triggers>
+                                </Path>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="#FFA8B6" FontSize="{DynamicResource LoginLabelFontSize}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" IsVisible="{Binding HasError}" LineBreakMode="WordWrap"/>
+
+            <Button Text="{DynamicResource LblLoginBtn}" Command="{Binding LoginCommand}" BackgroundColor="#0DCAF0" TextColor="#152840" FontSize="{DynamicResource LoginButtonFontSize}" FontAttributes="Bold" CornerRadius="12" HeightRequest="{DynamicResource LoginFieldHeight}" Margin="0,10,0,0">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Opacity="0.2" Offset="0,6" Radius="15"/>
+                </Button.Shadow>
+            </Button>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="25" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding IsBusy}">
+
+            <Label LineBreakMode="NoWrap" HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Abc2 " TextColor="#0DCAF0" FontSize="{DynamicResource LoadingFontSize}" FontAttributes="Bold" />
+                        <Span Text="ServiceDesk" TextColor="White" FontSize="{DynamicResource LoadingFontSize}" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="White" WidthRequest="45" HeightRequest="45" HorizontalOptions="Center"/>
+            <Label Text="Authenticating..." TextColor="#B0C4DE" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

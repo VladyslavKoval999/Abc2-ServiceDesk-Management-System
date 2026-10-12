@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="ServiceDesk.Maui.Views.DateTimePickerPopup"
+           CanBeDismissedByTappingOutsideOfPopup="True"
+           Color="Transparent">
+
+    <Border x:Name="MainBorder" StrokeShape="RoundRectangle 16" BackgroundColor="#F4F6F9" Padding="24" WidthRequest="360" MaximumWidthRequest="400" MaximumHeightRequest="600" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+        <Border.Shadow>
+            <Shadow Brush="Black" Opacity="0.12" Offset="0,8" Radius="24"/>
+        </Border.Shadow>
+
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Spacing="18">
+                <Label x:Name="TitleLabel" Text="{DynamicResource LblSelectDateTimeTitle}" FontSize="18" FontAttributes="Bold" TextColor="#1A2837" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="DateTitleLabel" Text="{DynamicResource LblDateLabel}" FontSize="13" TextColor="#8A97A8" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <DatePicker x:Name="PopupDatePicker" TextColor="#1A2837" FontSize="15" HorizontalOptions="Fill"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="TimeTitleLabel" Text="{DynamicResource LblTimeLabel}" FontSize="13" TextColor="#8A97A8" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border Stroke="#A1AAB2" StrokeThickness="1.5" StrokeShape="RoundRectangle 8" BackgroundColor="White" HeightRequest="44" Padding="14,0">
+                        <TimePicker x:Name="PopupTimePicker" TextColor="#1A2837" FontSize="15" HorizontalOptions="Fill"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,12,0,0">
+                    <Button x:Name="CancelBtn" Grid.Column="0" Text="{DynamicResource LblCancel}" Clicked="OnCancelClicked" BackgroundColor="Transparent" TextColor="#6C757D" BorderColor="#C7CDD5" BorderWidth="1" CornerRadius="8" FontAttributes="Bold" HeightRequest="44" LineBreakMode="WordWrap"/>
+                    <Button x:Name="SaveBtn" Grid.Column="1" Text="{DynamicResource LblSave}" Clicked="OnSaveClicked" BackgroundColor="#0DCAF0" TextColor="White" CornerRadius="8" FontAttributes="Bold" HeightRequest="44" LineBreakMode="WordWrap"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</mct:Popup>

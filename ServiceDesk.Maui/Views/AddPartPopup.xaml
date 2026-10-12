@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="ServiceDesk.Maui.Views.AddPartPopup"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Color="Transparent">
+
+    <mct:Popup.Resources>
+        <x:Double x:Key="PopupWidth">400</x:Double>
+        <x:Double x:Key="PopupTitleSize">20</x:Double>
+        <x:Double x:Key="PopupLabelSize">13</x:Double>
+        <x:Double x:Key="PopupEntrySize">14</x:Double>
+        <x:Double x:Key="PopupButtonSize">14</x:Double>
+        <Thickness x:Key="PopupPadding">24</Thickness>
+    </mct:Popup.Resources>
+
+    <Border x:Name="MainBorder" StrokeShape="RoundRectangle 16" BackgroundColor="White" WidthRequest="{DynamicResource PopupWidth}" Padding="{DynamicResource PopupPadding}" MaximumWidthRequest="450" MaximumHeightRequest="600" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+        <Border.Shadow>
+            <Shadow Brush="Black" Opacity="0.15" Offset="0,8" Radius="24"/>
+        </Border.Shadow>
+
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Spacing="20">
+                <Label x:Name="TitleLabel" Text="{DynamicResource LblAddPart}" FontSize="{DynamicResource PopupTitleSize}" FontAttributes="Bold" TextColor="#1A2837" LineBreakMode="WordWrap"/>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="LblSelectTitle" Text="{DynamicResource LblSelectPart}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#8A97A8" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border StrokeShape="RoundRectangle 8" Stroke="#A1AAB2" StrokeThickness="1.5" HeightRequest="44" Padding="10,0" BackgroundColor="White">
+                        <ScrollView Orientation="Horizontal" VerticalOptions="Center" HorizontalScrollBarVisibility="Never">
+                            <Picker x:Name="PartPicker" ItemDisplayBinding="{Binding Name}" TextColor="#1A2837" BackgroundColor="Transparent" FontSize="{DynamicResource PopupEntrySize}" MinimumWidthRequest="250" VerticalOptions="Fill" VerticalTextAlignment="Center"/>
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label x:Name="LblQtyTitle" Text="{DynamicResource LblColQuantity}" FontSize="{DynamicResource PopupLabelSize}" TextColor="#8A97A8" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    <Border StrokeShape="RoundRectangle 8" Stroke="#A1AAB2" StrokeThickness="1.5" HeightRequest="44" Padding="14,0" BackgroundColor="White">
+                        <Entry x:Name="QtyEntry" Text="1" Keyboard="Numeric" TextColor="#1A2837" FontSize="{DynamicResource PopupEntrySize}" MinimumWidthRequest="250" VerticalOptions="Fill" VerticalTextAlignment="Center" BackgroundColor="Transparent"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,10,0,0">
+                    <Button x:Name="CancelBtn" Grid.Column="0" Text="{DynamicResource LblCancel}" Clicked="OnCancelClicked" BackgroundColor="Transparent" TextColor="#6C757D" BorderColor="#C7CDD5" BorderWidth="1" CornerRadius="8" HeightRequest="44" FontAttributes="Bold" FontSize="{DynamicResource PopupButtonSize}" LineBreakMode="WordWrap"/>
+                    <Button x:Name="AddBtn" Grid.Column="1" Text="{DynamicResource LblAddPart}" Clicked="OnAddClicked" BackgroundColor="#0DCAF0" TextColor="White" CornerRadius="8" HeightRequest="44" FontAttributes="Bold" FontSize="{DynamicResource PopupButtonSize}" LineBreakMode="WordWrap"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</mct:Popup>
